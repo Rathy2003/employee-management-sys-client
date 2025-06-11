@@ -70,28 +70,28 @@ const onScanFailure = (error) => {
 };
 
 const startScanner = () => {
-    // This method will trigger user permissions
-    Html5Qrcode.getCameras().then(devices => {
-        if (devices && devices.length) {
-            const cameraId = devices[0].id;
-            html5QrCode.start(
-                cameraId,
-                {
-                    fps: 10,
-                    qrbox: { width: 250, height: 250 }
-                },
-                onScanSuccess,
-                onScanFailure
-            ).catch(err => {
-                errorMessage.value = `Unable to start scanning: ${err}`;
-                console.error(`Unable to start scanning.`, err);
-            });
-        } else {
-            errorMessage.value = "No cameras found on this device.";
-        }
-    }).catch(err => {
-        errorMessage.value = `Error getting cameras: ${err}`;
-        console.error(err);
+    const config = {
+        fps: 10,
+        qrbox: { width: 250, height: 250 }
+    };
+
+    // Request the rear camera
+    html5QrCode.start(
+        { facingMode: "environment" },
+        config,
+        onScanSuccess,
+        onScanFailure
+    ).catch(err => {
+        console.warn(`Failed to start with rear camera: ${err}. Trying any camera.`);
+        // If rear camera fails, try any available camera
+        html5QrCode.start(
+            { }, // Passing empty constraints tries to use any camera
+            config,
+            onScanSuccess,
+            onScanFailure
+        ).catch(err2 => {
+            errorMessage.value = `Unable to start scanning: ${err2}`;
+        });
     });
 };
 
