@@ -7,25 +7,29 @@
                 <div class="flex items-center justify-between">
                     <div class="text-sm text-gray-600 space-y-2">
                         <div>
-                            <span class="font-medium text-gray-500">Username:</span>
-                            <span class="font-semibold text-gray-800">Kak Vattana</span>
+                            <span class="font-medium text-gray-500">Username: </span>
+                            <span class="font-semibold text-gray-800">{{ user_data.first_name }} {{ user_data.last_name }}</span>
                         </div>
                         <div>
-                            <span class="font-medium text-gray-500">Date Of Birth:</span>
-                            <span class="font-semibold text-gray-800">01/12/2005</span>
+                            <span class="font-medium text-gray-500">Date Of Birth: </span>
+                            <span class="font-semibold text-gray-800">{{ user_data.dob }}</span>
                         </div>
                         <div>
-                            <span class="font-medium text-gray-500">Phone Number:</span>
-                            <span class="font-semibold text-gray-800">0123456789</span>
+                            <span class="font-medium text-gray-500">Phone Number: </span>
+                            <span class="font-semibold text-gray-800">{{ user_data.phone_number }}</span>
                         </div>
                     </div>
+                    <!-- User Profile -->
                     <div class="bg-blue-500 rounded-full w-16 h-16 flex items-center justify-center flex-shrink-0 ml-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        <svg v-if="!user_data.photo" class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
+
+                        <img v-if="user_data.photo" :src="getImage(user_data.photo)" alt="User Profile" class="w-16 h-16 rounded-full object-cover">
                     </div>
+                    <!-- End User Profile -->
                 </div>
             </div>
 
@@ -112,6 +116,11 @@
 <script>
 export default {
     name: 'Home',
+    computed: {
+        user_data(){
+            return this.$store.state.auth.user;
+        }
+    },
     created() {
         this.interval = setInterval(() => {
             this.time = Intl.DateTimeFormat(navigator.language, {
@@ -127,8 +136,13 @@ export default {
     },
     data() {
         return {
-            interval: null,
-            time: null
+            time: '',
+            interval: null
+        }
+    },
+    methods:{
+        getImage(url){
+            return import.meta.env.VITE_IMAGE_URL + '/images/employee/' + url;
         }
     }
 }
