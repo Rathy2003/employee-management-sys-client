@@ -58,7 +58,7 @@
         <!-- Action Panel -->
         <div class="bg-gray-100 rounded-t-3xl px-5 py-8 relative">
             <div class="flex justify-around text-center">
-                <button class="flex flex-col items-center space-y-2 text-gray-700 p-2">
+                <router-link to="/reports" class="flex flex-col items-center space-y-2 text-gray-700 p-2">
                     <div class="bg-white rounded-xl shadow-md p-4">
                         <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +68,7 @@
                         </svg>
                     </div>
                     <span class="text-sm font-medium">Report</span>
-                </button>
+                </router-link>
                 <button class="flex flex-col items-center space-y-2 text-gray-700 p-2">
                     <div class="bg-white rounded-xl shadow-md p-4">
                         <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -79,7 +79,7 @@
                     </div>
                     <span class="text-sm font-medium">Request OT</span>
                 </button>
-                <button class="flex flex-col items-center space-y-2 text-gray-700 p-2">
+                <router-link to="/request-leave" class="flex flex-col items-center space-y-2 text-gray-700 p-2">
                     <div class="bg-white rounded-xl shadow-md p-4">
                         <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -89,7 +89,7 @@
                         </svg>
                     </div>
                     <span class="text-sm font-medium">Request Leave</span>
-                </button>
+                </router-link>
             </div>
 
             <div class="h-24">
@@ -142,7 +142,7 @@ export default {
     },
     methods:{
         getImage(url){
-            return import.meta.env.VITE_IMAGE_URL + '/images/employee/' + url;
+            return import.meta.env.VITE_IMAGE_URL + '/images/users/' + url;
         }
     }
 }

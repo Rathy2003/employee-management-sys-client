@@ -127,7 +127,7 @@ export default {
                     temp_user_data.phone_number = this.form_data.phone;
                     temp_user_data.address = this.form_data.address;
                     temp_user_data.dob = this.form_data.dob;
-                    store.dispatch('setUser', temp_user_data);
+                    this.$store.dispatch('setUser', temp_user_data);
                 }
             }).catch(err => {
                 if(err.status === 422){

@@ -37,6 +37,18 @@ const router = createRouter({
                     name: 'Notification',
                     component: () => import('../views/Notification.vue'),
                     meta: { requiresAuth: true }
+                },
+                {
+                    path: 'reports',
+                    name: 'Report',
+                    component: () => import('../views/Report.vue'),
+                    meta: { requiresAuth: true }
+                },
+                {
+                    path: 'request-leave',
+                    name: 'Request Leave',
+                    component: () => import('../views/RequestLeave.vue'),
+                    meta: { requiresAuth: true }
                 }
             ]
         },

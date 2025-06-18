@@ -46,7 +46,7 @@
         </div>
     </nav>
     <main class="bg-[#ffffff] h-[calc(100vh-52px)]">
-        <div id="main-content" class="w-[65%] max-w-[600px] mx-auto shadow-md h-full flex justify-center items-start">
+        <div id="main-content" style="overflow-y: scroll;" class="w-[65%] max-w-[600px] mx-auto shadow-md h-full flex justify-center items-start">
             <router-view></router-view>
         </div>
     </main>
