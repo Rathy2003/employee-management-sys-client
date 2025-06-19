@@ -66,6 +66,7 @@ export default {
     },
     methods: {
         async login() {
+          $.LoadingOverlay("show")
             if (this.form_data.email === '') {
                 this.errors.email = 'Email is required';
             }
@@ -78,13 +79,14 @@ export default {
                         if (response.status === 200) {
                             const token = response.data.token;
                             localStorage.setItem('_token', token);
-
                             const success = await store.dispatch('auth/verifyToken');
 
                             if (success) {
+                                $.LoadingOverlay("hide")
                                 this.$router.push('/');
                             } else {
                                 console.log('Token verification failed after login');
+                              $.LoadingOverlay("hide")
                             }
                         }
                     })
@@ -97,9 +99,11 @@ export default {
                             if (this.errors.email === 'Invalid email or password') {
                                 this.errors.password = 'Invalid email or password';
                             }
+                            $.LoadingOverlay("hide")
                         } else {
-                            console.error('Login failed:', error); // Network or unexpected error
+                            alert('Login failed:', error)
                             this.errors.email = 'Something went wrong. Please try again.';
+                            $.LoadingOverlay("hide")
                         }
                     })
             }

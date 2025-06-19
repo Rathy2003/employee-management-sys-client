@@ -33,12 +33,6 @@ const router = createRouter({
                     meta: { requiresAuth: true }
                 },
                 {
-                    path: 'notification',
-                    name: 'Notification',
-                    component: () => import('../views/Notification.vue'),
-                    meta: { requiresAuth: true }
-                },
-                {
                     path: 'reports',
                     name: 'Report',
                     component: () => import('../views/Report.vue'),
@@ -48,6 +42,12 @@ const router = createRouter({
                     path: 'request-leave',
                     name: 'Request Leave',
                     component: () => import('../views/RequestLeave.vue'),
+                    meta: { requiresAuth: true }
+                },
+                {
+                    path: 'request-overtime',
+                    name: 'Request Overtime',
+                    component: () => import('../views/RequestOvertime.vue'),
                     meta: { requiresAuth: true }
                 }
             ]

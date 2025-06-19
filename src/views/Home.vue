@@ -1,7 +1,6 @@
 <template>
     <div class="w-full">
         <div class="p-5">
-            <!-- Employee Card -->
             <div class="bg-white rounded-2xl p-5 shadow-md mb-6">
                 <h2 class="font-bold text-center mb-4 text-gray-800">Employee Card</h2>
                 <div class="flex items-center justify-between">
@@ -29,11 +28,8 @@
 
                         <img v-if="user_data.photo" :src="getImage(user_data.photo)" alt="User Profile" class="w-16 h-16 rounded-full object-cover">
                     </div>
-                    <!-- End User Profile -->
                 </div>
             </div>
-
-            <!-- Date and Time -->
             <div class="flex justify-around text-white mb-6">
                 <div class="flex items-center space-x-2">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -55,7 +51,6 @@
             </div>
         </div>
 
-        <!-- Action Panel -->
         <div class="bg-gray-100 rounded-t-3xl px-5 py-8 relative">
             <div class="flex justify-around text-center">
                 <router-link to="/reports" class="flex flex-col items-center space-y-2 text-gray-700 p-2">
@@ -69,7 +64,7 @@
                     </div>
                     <span class="text-sm font-medium">Report</span>
                 </router-link>
-                <button class="flex flex-col items-center space-y-2 text-gray-700 p-2">
+                <router-link to="/request-overtime" class="flex flex-col items-center space-y-2 text-gray-700 p-2">
                     <div class="bg-white rounded-xl shadow-md p-4">
                         <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +73,7 @@
                         </svg>
                     </div>
                     <span class="text-sm font-medium">Request OT</span>
-                </button>
+                </router-link>
                 <router-link to="/request-leave" class="flex flex-col items-center space-y-2 text-gray-700 p-2">
                     <div class="bg-white rounded-xl shadow-md p-4">
                         <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -93,11 +88,9 @@
             </div>
 
             <div class="h-24">
-                <!-- Spacer for the floating button -->
             </div>
 
         </div>
-        <!-- Floating Action Button -->
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2">
             <button @click="$router.push('/qr-scanner')"
                 class="bg-white text-blue-600 rounded-full shadow-lg w-16 h-16 flex items-center justify-center">

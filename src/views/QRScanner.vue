@@ -16,8 +16,8 @@
 
         <!-- Success Modal -->
         <div v-if="showSuccessModal"
-            class="absolute inset-0 bg-black bg-opacity-80 z-10">
-            <div class="w-full mx-auto mt-[70px] flex flex-col items-center justify-center p-8 ">
+            class="absolute inset-0 bg-black bg-opacity-80 z-10 modal">
+            <div class="w-[50%] mx-auto mt-[70px] flex flex-col items-center justify-center p-8 ">
                 <div class="bg-white text-green-500 rounded-full p-4 mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -38,8 +38,8 @@
 
         <!-- Error Modal -->
         <div v-if="showErrorModal"
-           class="absolute inset-0 bg-black bg-opacity-80 z-10">
-        <div class="w-full mx-auto mt-[70px] flex flex-col items-center justify-center p-8 ">
+           class="absolute inset-0 bg-black bg-opacity-80 z-10 modal">
+        <div class="w-[50%] mx-auto mt-[70px] flex flex-col items-center justify-center p-8 ">
           <div class="bg-white text-green-500 rounded-full p-4 mb-6">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="#DC2626">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -104,15 +104,18 @@
               .then(rp => {
                 if (rp.data.success) {
                   showSuccessModal.value = true;
-                  modalMessage.value = "Attendance has been saved";
+                  modalMessage.value = rp.data.message;
                 } else {
                   showErrorModal.value = true;
-                  modalMessage.value = "Invalid QRCode or Location";
+                  modalMessage.value = rp.data.message
                 }
                 $.LoadingOverlay("hide");
               })
               .catch(err => {
                 if(err.status === 400) {
+                  showErrorModal.value = true;
+                  modalMessage.value = err.response.data.message
+                }else if(err.status === 403){
                   showErrorModal.value = true;
                   modalMessage.value = err.response.data.message
                 }
@@ -137,7 +140,6 @@ const startScanner = () => {
         qrbox: { width: 250, height: 250 }
     };
 
-    // Request the rear camera
     html5QrCode.start(
         { facingMode: "environment" },
         config,
@@ -145,9 +147,8 @@ const startScanner = () => {
         onScanFailure
     ).catch(err => {
         console.warn(`Failed to start with rear camera: ${err}. Trying any camera.`);
-        // If rear camera fails, try any available camera
         html5QrCode.start(
-            { }, // Passing empty constraints tries to use any camera
+            { },
             config,
             onScanSuccess,
             onScanFailure
@@ -178,6 +179,7 @@ onMounted(() => {
 #qr-shaded-region{
     inset: -13px !important;
 }
+
 </style>
 
 <style scoped>
@@ -222,5 +224,12 @@ onMounted(() => {
     }
 
     /* Should be slightly less than container height */
+}
+@media all and (max-width: 600px) {
+  .modal{
+    & > div{
+      width: 100% !important;
+    }
+  }
 }
 </style>

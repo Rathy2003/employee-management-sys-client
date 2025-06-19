@@ -106,22 +106,25 @@
         this.errors.reason = '';
       },
       onSubmit (){
+        $.LoadingOverlay("show")
         let data = this.form_data
         data.employee_id = store.state.auth.user.id
         axios.post(`${import.meta.env.VITE_API_BASE_URL}/request_leave`,data)
         .then((response) => {
           if(response.status === 201){
             this.clearForms();
+            this.clearErrors();
             this.success.show = true;
             this.success.message = response.data.message;
+            $.LoadingOverlay("hide")
           }
         })
         .catch((error) => {
-          console.log(error)
           let keys = Object.keys(error.response.data[0])
           for (let key of keys){
             this.errors[key] = error.response.data[0][key][0]
           }
+          $.LoadingOverlay("hide")
         })
       }
     }

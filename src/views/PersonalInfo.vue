@@ -19,7 +19,7 @@
             
             <div>
                 <label for="phone-number" class="block mb-2 text-sm font-medium text-gray-700">Phone Number</label>
-                <input type="tel" id="phone-number" v-model="form_data.phone" :class="{'border-red-500': errors.phone}" class="w-full px-4 py-3 border border-gray-300 bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="tel" id="phone-number" v-model="form_data.phone" @input="formatPhone" :class="{'border-red-500': errors.phone}" class="w-full px-4 py-3 border border-gray-300 bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <div v-if="errors.phone_number" class="text-red-500 text-sm mt-2">
                     {{ errors.phone_number }}
                 </div>
@@ -108,6 +108,7 @@ export default {
     },
     methods:{
         SaveChanges(){
+            $.LoadingOverlay("show")
             let input = {
                 id: this.form_data.id,
                 firstname: this.form_data.first_name,
@@ -127,8 +128,9 @@ export default {
                     temp_user_data.phone_number = this.form_data.phone;
                     temp_user_data.address = this.form_data.address;
                     temp_user_data.dob = this.form_data.dob;
-                    this.$store.dispatch('setUser', temp_user_data);
+                  this.$store.commit('auth/setUser', temp_user_data);
                 }
+              $.LoadingOverlay("hide")
             }).catch(err => {
                 if(err.status === 422){
                     let keys = Object.keys(err.response.data[0]);
@@ -136,9 +138,25 @@ export default {
                         this.errors[keys[i]] = err.response.data[0][keys[i]][0];
                     }
                 }
+                $.LoadingOverlay("hide")
                 console.log(err);
             })
-        }
+        },
+        formatPhone() {
+          let digits = this.form_data.phone.replace(/\D/g, '');
+          if (digits.length > 0 && digits[0] !== '0') {
+            digits = '0' + digits;
+          }
+          digits = digits.substring(0, 10);
+
+          if (digits.length <= 3) {
+            this.form_data.phone = digits;
+          } else if (digits.length <= 6) {
+            this.form_data.phone = `${digits.slice(0, 3)} ${digits.slice(3)}`;
+          } else {
+            this.form_data.phone = `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
+          }
+        },
     }
 
 }
