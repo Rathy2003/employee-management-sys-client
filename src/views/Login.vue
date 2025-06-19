@@ -34,10 +34,10 @@
                         </div>
                     </div>
 
-                    <div class="mb-6">
-                        <router-link to="/reset-password" class="text-sm text-gray-600 hover:text-blue-600">Forget
-                            password?</router-link>
-                    </div>
+<!--                    <div class="mb-6">-->
+<!--                        <router-link to="/reset-password" class="text-sm text-gray-600 hover:text-blue-600">Forget-->
+<!--                            password?</router-link>-->
+<!--                    </div>-->
                     <button type="submit"
                         class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 mb-6">Login</button>
                 </form>
